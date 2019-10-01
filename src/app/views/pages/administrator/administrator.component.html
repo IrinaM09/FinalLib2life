@@ -1,0 +1,176 @@
+<kt-portlet>
+    <kt-portlet-body>
+        <!--begin: Wizard -->
+        <div #wizard class="kt-grid kt-wizard-v1 kt-wizard-v1--white" id="kt_wizard_v1" data-ktwizard-state="step-first">
+            <div class="kt-grid__item">
+                <!--begin: Form Wizard Nav -->
+                <div class="kt-wizard-v1__nav">
+                    <!---begin: Step 1 -->
+                    <div class="kt-wizard-v1__nav-items">
+                        <a class="kt-wizard-v1__nav-item" href="javascript:;" data-ktwizard-type="step" data-ktwizard-state="current">
+                            <div class="kt-wizard-v1__nav-body">
+                                <div class="kt-wizard-v1__nav-icon">
+                                    <i class="flaticon2-list-3"></i>
+                                </div>
+                                <div class="kt-wizard-v1__nav-label">
+                                    1) Introdu detalii
+                                </div>
+                            </div>
+                        </a>
+                        <!-- end: Step 1 -->
+                        <!-- begin: Step 2 -->
+                        <a class="kt-wizard-v1__nav-item" href="javascript:;" data-ktwizard-type="step">
+                            <div class="kt-wizard-v1__nav-body">
+                                <div class="kt-wizard-v1__nav-icon">
+                                    <i class="flaticon-share"></i>
+                                </div>
+                                <div class="kt-wizard-v1__nav-label">
+                                    2) Așteaptă
+                                </div>
+                            </div>
+                        </a>
+                        <!-- begin: Step 3 -->
+                        <a class="kt-wizard-v1__nav-item" href="javascript:;" data-ktwizard-type="step">
+                            <div class="kt-wizard-v1__nav-body">
+                                <div class="kt-wizard-v1__nav-icon">
+                                    <i class="flaticon-edit"></i>
+                                </div>
+                                <div class="kt-wizard-v1__nav-label">
+                                    2) Editează și salvează
+                                </div>
+                            </div>
+                        </a>
+                        <!-- end: Step 3 -->
+                    </div>
+                </div>
+                <!--end: Form Wizard Nav -->
+            </div>
+            <div class="kt-grid__item kt-grid__item--fluid kt-wizard-v1__wrapper">
+                <!--begin: Form Wizard Form-->
+                <form class="kt-form" id="kt_form">
+                    <!--begin: Form Wizard Step 1-->
+                    <div class="kt-wizard-v1__content" data-ktwizard-type="step-content" data-ktwizard-state="current">
+                        <div class="kt-heading kt-heading--md">Metadate</div>
+                        <div class="kt-form__section kt-form__section--first">
+                            <div class="kt-wizard-v1__form">
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label>Denumire carte</label>
+                                        <input type="text" [(ngModel)]="bookName" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Numele cărții">
+                                        <span class="form-text text-muted">Introdu numele cărții.</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Încarcă</label>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div class="input-container">
+                                                    <button mat-raised-button>Încarcă PDF</button>
+                                                    <input type="file" (change)="onFileChange($event)" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="upload-btn-wrapper">
+                                                    <div class="kt-wizard-v1__nav-icon">
+                                                        <i class="flaticon-upload"></i>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <span class="form-text text-muted">Încarcă un fișier PDF.</span>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label>Autor</label>
+                                        <input type="text" class="form-control" placeholder="Nume autor/autori">
+                                        <span class="form-text text-muted">Introdu numele autorului sau autorilor.</span>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label>An de publicare</label>
+                                        <input type="text" class="form-control" placeholder="An publicare">
+                                        <span class="form-text text-muted">Introdu anul de publicare a cărții.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end: Form Wizard Step 1-->
+
+                    <!--begin: Form Wizard Step 2-->
+                    <div class="kt-wizard-v1__content" data-ktwizard-type="step-content">
+                        <kt-material-preview [viewItem]="table">
+                            <div class="kt-section">
+                                <!-- <div class="kt-separator kt-separator--dashed"></div> -->
+                                <!-- <div class="kt-section__content"> -->
+                                <div class="example-container mat-elevation-z8">
+                                    <mat-table [dataSource]="dataSource">
+                                        <ng-container matColumnDef="name">
+                                            <mat-header-cell *matHeaderCellDef> Acțiune </mat-header-cell>
+                                            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="progress">
+                                            <mat-header-cell *matHeaderCellDef> Progres </mat-header-cell>
+                                            <mat-cell *matCellDef="let element"> {{element.progress}} </mat-cell>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="status">
+                                            <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                                            <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="description">
+                                            <mat-header-cell *matHeaderCellDef> Descriere </mat-header-cell>
+                                            <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="action">
+                                            <mat-header-cell *matHeaderCellDef> Prelucrare </mat-header-cell>
+                                            <mat-cell *matCellDef="let element">
+                                                <mat-radio-button (click)="startAction(element.name)"> Începe </mat-radio-button>
+                                                <div style="padding:10px"></div>
+                                                <mat-radio-button (click)="skipAction(element.name)"> Omite </mat-radio-button>
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                        <mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{hovered: row.hovered}" (mouseover)="row.hovered = true" (mouseout)="row.hovered = false"></mat-row>
+                                    </mat-table>
+                                </div>
+                                <!-- </div> -->
+                            </div>
+                        </kt-material-preview>
+                    </div>
+                    <!--end: Form Wizard Step 2-->
+
+                    <!--begin: Form Wizard Step 3-->
+                    <div class="kt-wizard-v1__content" data-ktwizard-type="step-content">
+                        <editor [(ngModel)]="editorContent" [ngModelOptions]="{standalone: true}" [init]="tinyMceConfig" (onEditorContentChange)="keyupHandler($event)">conținut
+                        </editor>
+                    </div>
+                    <!--end: Form Wizard Step 3-->
+
+                    <!--begin: Form Actions -->
+                    <div class="kt-form__actions">
+                        <div class="btn btn-secondary btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-prev">
+                            Înapoi
+                        </div>
+                        <div (click)="onSubmit()" class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-submit">
+                            Salvează
+                        </div>
+                        <div (click)="onNext()" class="btn btn-brand btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" data-ktwizard-type="action-next">
+                            Înainte
+                        </div>
+                    </div>
+                    <!--end: Form Actions -->
+                </form>
+                <!--end: Form Wizard Form-->
+            </div>
+        </div>
+        <!--end: Wizard -->
+    </kt-portlet-body>
+</kt-portlet>

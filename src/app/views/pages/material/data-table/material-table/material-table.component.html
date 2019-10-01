@@ -1,0 +1,56 @@
+<kt-notice [icon]="'flaticon-warning kt-font-primary'">
+    For more info please check the components's official demos & documentation
+    <a class="kt-link" href="https://material.angular.io/components/table/examples" target="_blank">demos & documentation</a>
+</kt-notice>
+
+
+<kt-material-preview [viewItem]="exampleBasic">
+    <div class="kt-section">
+        <p class="kt-section__sub">
+            The
+            <mark>mat-table</mark> provides a Material Design styled data-table that can be used to display rows of data.
+        </p>
+        <p>
+            This table builds on the foundation of the CDK data-table and uses a similar interface for its data input and template, except that its element and attribute selectors will be prefixed with
+            <mark>mat-</mark> instead of
+            <mark>cdk-</mark>. For more information on the interface and a detailed look at how the table is implemented, see the
+            <a href="https://material.angular.io/cdk/table/overview" target="_blank">guide covering the CDK data-table</a>.
+        </p>
+        <div class="kt-separator kt-separator--dashed"></div>
+        <div class="kt-section__content">
+            <div class="example-container mat-elevation-z8">
+                <mat-table #table1 [dataSource]="dataSource1">
+                    <!--- Note that these columns can be defined in any order.
+										The actual rendered columns are set as a property on the row definition" -->
+
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="position">
+                        <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="weight">
+                        <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="symbol">
+                        <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns1"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns1;"></mat-row>
+                </mat-table>
+            </div>
+        </div>
+    </div>
+</kt-material-preview>
