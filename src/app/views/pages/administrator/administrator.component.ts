@@ -42,6 +42,8 @@ export class AdministratorComponent implements OnInit, AfterViewInit {
 
 	private testData: FormData;
 
+	wizard;
+
 	table;
 
 	displayedColumns = ['name', 'progress', 'status', 'description', 'action'];
@@ -52,13 +54,13 @@ export class AdministratorComponent implements OnInit, AfterViewInit {
 
 	ngAfterViewInit(): void {
 		// Initialize form wizard
-		const wizard = new KTWizard(this.el.nativeElement, {
-			startStep: 1
+		this.wizard = new KTWizard(this.el.nativeElement, {
+			startStep: 1,
 		});
 
 
 		// Validation before going to next page
-		wizard.on('beforeNext', function (wizardObj) {
+		this.wizard.on('beforeNext', function (wizardObj) {
 			// https://angular.io/guide/forms
 			// https://angular.io/guide/form-validation
 
@@ -67,11 +69,12 @@ export class AdministratorComponent implements OnInit, AfterViewInit {
 		});
 
 		// Change event
-		wizard.on('change', function (wizard) {
+		this.wizard.on('change', function (wizard) {
 			setTimeout(function () {
 				KTUtil.scrollTop();
 			}, 500);
 		});
+
 	}
 
 	constructor(private service: ServicesService) {
@@ -89,8 +92,19 @@ export class AdministratorComponent implements OnInit, AfterViewInit {
 	}
 
 	onNext() {
-		console.log(this.bookName)
-		console.log(this.testData)
+		var crtStep = this.wizard.getStep(); 
+		
+		console.log("step: " + crtStep);
+
+		if (crtStep == 2) {
+			this.service.getHtml().subscribe((res) => {
+				console.log(res);
+				this.editor.setContent(res);
+
+			}, (err: HttpErrorResponse) => {
+				console.log("error: " + err);
+			});
+		}
 	}
 
 	startAction(element: String) {
@@ -145,11 +159,9 @@ export class AdministratorComponent implements OnInit, AfterViewInit {
 		var result = true;
 
 		this.testData.append('bookName', this.bookName);
-		this.testData.append('searchedBook', "");
 
 		console.log("data to send (book name): " + this.testData.get("bookName"));
 		console.log("data to send (file): " + this.testData.get("file"));
-		console.log("data to send (searchedBook - unused): " + this.testData.get("searchedBook"));
 
 		this.service.sendFormData(this.testData).subscribe((res) => {
 			console.log(res);
@@ -227,7 +239,7 @@ export class AdministratorComponent implements OnInit, AfterViewInit {
 			bold italic underline strikethrough forecolor backcolor |
 			alignleft aligncenter alignright alignjustify |
 			bullist numlist outdent indent |
-			link image | print preview media"
+			print preview media"
 			removeformat`,
 			setup: editor => {
 				this.editor = editor;
@@ -239,7 +251,7 @@ export class AdministratorComponent implements OnInit, AfterViewInit {
 				editor.on('keyup change', () => {
 					const content = editor.getContent();
 					//   this.data.content = content;
-					//   this.onEditorContentChange.emit(content);
+					  this.editor.onEditorContentChange.emit(content);
 				});
 			}
 		};

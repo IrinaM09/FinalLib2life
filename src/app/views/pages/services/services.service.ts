@@ -20,7 +20,7 @@ export class ServicesService {
 
   /* SEND button - container */
   public sendFormData(testData: FormData) {
-    console.log("sending to " + this.baseUrl + "the data from the form")
+    console.log("sending to " + this.baseUrl + "uploadFile  the data from the form")
     return this.http.post(this.baseUrl + "uploadFile", testData, { responseType: 'text' });
   }
 
@@ -47,4 +47,10 @@ export class ServicesService {
     console.log("sending to " + this.baseUrl + "getTables")
     return this.http.get(this.baseUrl + "getTables", { responseType: 'text' });
   }
+
+    /* Get the HTML file */
+    public getHtml() {
+      console.log("sending to " + this.baseUrl + "getHtml")
+      return this.http.get(this.baseUrl + "getHtml", { responseType: 'text' });
+    }
 }
